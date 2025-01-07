@@ -1,0 +1,79 @@
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+.btn-submit {
+    background-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+.btn-submit:hover {
+    background-color: #004085;
+}
+
+.table-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    background-color: #007bff;
+    color: #ffffff;
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.action-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.action-icons a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #007bff;
+    transition: color 0.2s;
+}
+
+.action-icons a:hover {
+    color: #0056b3;
+}
+
+.btn-add {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.btn-add a {
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.btn-add a:hover {
+    background-color: #0056b3;
+}
