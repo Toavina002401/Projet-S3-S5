@@ -15,7 +15,7 @@ String baseUrl = (String)request.getAttribute("baseUrl");
                         <li><a class="dropdown-item" href="<%= baseUrl %>/insertion_produits">Insertion d'un produit</a></li>
                         <li><a class="dropdown-item" href="<%= baseUrl %>/liste_produits">Liste des produits</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Recherche d'un produit</a></li>
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/recherche_produits">Recherche multicritere</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown me-3">

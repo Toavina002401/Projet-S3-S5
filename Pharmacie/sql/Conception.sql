@@ -4,6 +4,7 @@ CREATE TABLE TypeAge(
    PRIMARY KEY(id)
 );
 
+
 CREATE TABLE Categorie(
    id SERIAL,
    specialiste VARCHAR(250)  NOT NULL,

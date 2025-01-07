@@ -218,6 +218,43 @@ public class Produits {
         }
     }
 
-
+    public static Vector<Produits> getRechercheMulticriter(int corps,int typeAge,String symptome) throws Exception {
+        Vector<Produits> valiny=new Vector<Produits>();
+        Connection conn = null;
+        Statement stm = null;
+        ResultSet rsl = null;
+        try {
+            conn = Seconnecter.connect();
+            stm = conn.createStatement();
+            String sql = "SELECT * FROM VueProduitsmulticritaire where 1=1 ";
+            if (corps != -1) {
+                sql += " And id_corps = "+corps;
+            }
+            if (typeAge != -1) {
+                sql += " And id_age= "+typeAge;
+            }
+            if (symptome != null && !symptome.equals("")) {
+                sql += "And symptomes LIKE '%"+symptome+"%'";
+            }
+            rsl = stm.executeQuery(sql);
+            while (rsl.next()) {
+                Produits prod = new Produits();
+                prod.setId(rsl.getInt(1));
+                prod.setNom_produit(rsl.getString(2));
+                prod.setDescription(rsl.getString(3));
+                prod.setPrix(rsl.getDouble(4));
+                valiny.add(prod);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }finally{
+            if (rsl != null) {
+                rsl.close();
+                stm.close();
+                conn.close();
+            }
+        }
+        return valiny;
+    }
 
 }

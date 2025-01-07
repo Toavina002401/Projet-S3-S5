@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import source.model.Corps;
 import source.model.Laboratoires;
 import source.model.Produits;
+import source.model.TypeAge;
 
 
 @Controller
@@ -35,6 +37,16 @@ public class AdminController {
         @GetMapping("/insertion_produits")
         public ModelAndView insertionProduits() throws Exception {
             ModelAndView mav = new ModelAndView("Produits/Insertion");
+            return mav;
+        }
+
+        @GetMapping("/recherche_produits")
+        public ModelAndView rechercheProduits() throws Exception {
+            ModelAndView mav = new ModelAndView("Produits/Recherche");
+            Vector<TypeAge> listeAge = TypeAge.getAll();
+            Vector<Corps> listeCorps = Corps.getAll();
+            mav.addObject("listeCorps", listeCorps);
+            mav.addObject("listeAge", listeAge);
             return mav;
         }
 
@@ -103,6 +115,24 @@ public class AdminController {
                 mav.addObject("status", "error");
                 mav.addObject("message", e.getMessage());
             }
+            return mav;
+        }
+
+
+        @PostMapping("/rechercheMulticritere_produit")
+        public ModelAndView rechercheMulticritereProduit(@RequestParam("typeAge") int typeAge, @RequestParam("corps") int corps,  @RequestParam("symptome") String symptome) throws Exception {
+            ModelAndView mav = new ModelAndView("Produits/Recherche");
+            try {
+                Vector<Produits> liste = Produits.getRechercheMulticriter(corps, typeAge, symptome);
+                mav.addObject("liste", liste);
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", e.getMessage());
+            }
+            Vector<TypeAge> listeAge = TypeAge.getAll();
+            Vector<Corps> listeCorps = Corps.getAll();
+            mav.addObject("listeCorps", listeCorps);
+            mav.addObject("listeAge", listeAge);
             return mav;
         }
 
