@@ -4,6 +4,57 @@ INSERT INTO TypeAge (libele) VALUES
 ('Adulte'), 
 ('Sénior');
 
+INSERT INTO TypeProduits (libele) VALUES
+('Pommade'),
+('Crème'),
+('Gel'),
+('Sirop'),
+('Capsule'),
+('Goutte oculaire'),
+('Inhalateur'),
+('Suppositoire'),
+('Patch transdermique'),
+('Spray nasal'),
+('Mousse'),
+('Shampooing médicamenteux'),
+('Solution buvable'),
+('Baume'),
+('Huile essentielle'),
+('Ampoule injectable'),
+('Bandage médicamenteux'),
+('Pastille à sucer'),
+('Emulsion'),
+('Poudre à reconstituer');
+
+INSERT INTO Produits_Type (id_produits, id_typeProduit) VALUES
+(1, 2), -- Aspirine (Comprimé)
+(2, 2), -- Bêtabloquants (Comprimé)
+(3, 7), -- Inhalateur Ventoline (Inhalateur)
+(4, 2), -- Antibiotiques pour pneumonie (Comprimé)
+(5, 3), -- Crème hydratante (Crème)
+(6, 1), -- Corticoïdes locaux (Injectable)
+(7, 2), -- Anti-épileptiques (Comprimé)
+(8, 2), -- Anti-coagulants (Comprimé)
+(9, 2), -- Anti-acides (Comprimé)
+(10, 8), -- Probiotiques (Capsule)
+(11, 2), -- Antibiotiques urinaires (Comprimé)
+(12, 1), -- Médicament lithotritique (Injectable)
+(13, 1), -- Insuline (Injectable)
+(14, 2), -- Levothyrox (Comprimé)
+(15, 2), -- Pilule contraceptive (Comprimé)
+(16, 2), -- Traitement hormonal (Comprimé)
+(17, 6), -- Collyre anti-inflammatoire (Goutte oculaire)
+(18, 9), -- Lunettes spéciales glaucome (Équipement médical)
+(19, 10), -- Spray nasal (Spray nasal)
+(20, 2), -- Antibiotiques ORL (Comprimé)
+(21, 2), -- Suppléments de fer (Comprimé)
+(22, 2), -- Chimiothérapie orale (Comprimé)
+(23, 2), -- Antidépresseurs (Comprimé)
+(24, 2), -- Stabilisateurs de l’humeur (Comprimé)
+(25, 11), -- Dentifrice anti-caries (Dentifrice)
+(26, 12); -- Bain de bouche antiseptique (Solution buvable)
+
+
 
 INSERT INTO Categorie (specialiste) VALUES
 ('Cardiologie'),        -- Cœur et système cardiovasculaire

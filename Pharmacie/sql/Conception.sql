@@ -74,6 +74,34 @@ CREATE TABLE Produits_TypeAge(
    FOREIGN KEY(id_age) REFERENCES TypeAge(id)
 );
 
+CREATE TABLE Vente(
+   id SERIAL,
+   date_vente TIMESTAMP NOT NULL,
+   quantite INTEGER,
+   id_laboratoire INTEGER NOT NULL,
+   id_produits INTEGER NOT NULL,
+   PRIMARY KEY(id),
+   FOREIGN KEY(id_laboratoire) REFERENCES Laboratoires(id),
+   FOREIGN KEY(id_produits) REFERENCES Produits(id)
+);
+
+CREATE TABLE TypeProduits(
+   id SERIAL,
+   libele VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(id)
+);
+
+
+
+CREATE TABLE Produits_Type(
+   id_produits INTEGER,
+   id_typeProduit INTEGER,
+   PRIMARY KEY(id_produits, id_typeProduit),
+   FOREIGN KEY(id_produits) REFERENCES Produits(id),
+   FOREIGN KEY(id_typeProduit) REFERENCES TypeProduits(id)
+);
+
+
 
 
 

@@ -1,5 +1,7 @@
 package source.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import source.model.Corps;
 import source.model.Laboratoires;
 import source.model.Produits;
+import source.model.RechercheVente;
 import source.model.TypeAge;
+import source.model.TypeProduits;
+import source.model.Vente;
 
 
 @Controller
@@ -137,6 +142,70 @@ public class AdminController {
         }
 
     /*Fin produits */
+
+    /*Ventes */
+        @GetMapping("/insertion_ventes")
+        public ModelAndView insertionVentes() throws Exception {
+            ModelAndView mav = new ModelAndView("Ventes/Insertion");
+            Vector<Produits> listeProduits = Produits.getAll();
+            Vector<Laboratoires> listeLabo = Laboratoires.getAll();
+            mav.addObject("listeLabo", listeLabo);
+            mav.addObject("listeProduits", listeProduits);
+            return mav;
+        }
+
+        @GetMapping("/liste_ventes")
+        public ModelAndView listeVentes() throws Exception {
+            ModelAndView mav = new ModelAndView("Ventes/Liste");
+            Vector<TypeAge> listeAge = TypeAge.getAll();
+            Vector<TypeProduits> listeType = TypeProduits.getAll();
+            mav.addObject("listeAge", listeAge);
+            mav.addObject("listeType", listeType);
+            return mav;
+        }
+
+        @PostMapping("/submit_vente")
+        public ModelAndView submitVente(@RequestParam("dateVente") String dateVente, @RequestParam("produit") int produit,  @RequestParam("quantite") int quantite,  @RequestParam("labo") int labo) throws Exception {
+            ModelAndView mav = new ModelAndView("Ventes/Insertion");
+            LocalDateTime dateTime = LocalDateTime.parse(dateVente);
+            String formattedDate = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            try {
+                Vente vente = new Vente();
+                vente.setDate_vente(formattedDate);
+                vente.setIdproduits(produit);
+                vente.setQuantite(quantite);
+                vente.setIdlabo(labo);
+                vente.save();
+                mav.addObject("status", "success");
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", formattedDate+" avec "+ produit + " " + quantite + " " + labo);
+            }
+            Vector<Produits> listeProduits = Produits.getAll();
+            Vector<Laboratoires> listeLabo = Laboratoires.getAll();
+            mav.addObject("listeLabo", listeLabo);
+            mav.addObject("listeProduits", listeProduits);
+            return mav;
+        }
+
+        @PostMapping("/rechercheMulticritere_vente")
+        public ModelAndView rechercheMulticritereVente(@RequestParam("typeAge") int typeAge, @RequestParam("typeprod") int typeprod) throws Exception {
+            ModelAndView mav = new ModelAndView("Ventes/Liste");
+            try {
+                Vector<RechercheVente> liste = RechercheVente.getRecherche(typeprod, typeAge);
+                mav.addObject("liste", liste);
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", e.getMessage());
+            }
+            Vector<TypeAge> listeAge = TypeAge.getAll();
+            Vector<TypeProduits> listeType = TypeProduits.getAll();
+            mav.addObject("listeAge", listeAge);
+            mav.addObject("listeType", listeType);
+            return mav;
+        }
+
+    /*Fin ventes */
 
 
     /*Maladies */
