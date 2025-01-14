@@ -13,7 +13,9 @@ String baseUrl = (String)request.getAttribute("baseUrl");
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produits</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="<%= baseUrl %>/insertion_produits">Insertion d'un produit</a></li>
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/insertion_produitsConseiller">Insertion des produits conseiller du mois</a></li>
                         <li><a class="dropdown-item" href="<%= baseUrl %>/liste_produits">Liste des produits</a></li>
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/liste_produitsConseiller">Liste des produits  conseiller du mois</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="<%= baseUrl %>/recherche_produits">Recherche multicritere</a></li>
                     </ul>

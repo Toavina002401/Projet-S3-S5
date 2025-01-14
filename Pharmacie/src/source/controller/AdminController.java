@@ -1,7 +1,13 @@
 package source.controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.springframework.stereotype.Controller;
@@ -13,9 +19,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
+import source.connexion.Seconnecter;
 import source.model.Corps;
 import source.model.Laboratoires;
+import source.model.LesMois;
 import source.model.Produits;
+import source.model.ProduitsConseil;
 import source.model.RechercheVente;
 import source.model.TypeAge;
 import source.model.TypeProduits;
@@ -45,6 +55,16 @@ public class AdminController {
             return mav;
         }
 
+        @GetMapping("/insertion_produitsConseiller")
+        public ModelAndView insertionProduitsConseiller() throws Exception {
+            ModelAndView mav = new ModelAndView("Produits/InsertionConseiler");
+            Vector<Produits> liste = Produits.getAll();
+            Vector<LesMois> lesmois = LesMois.getAll();
+            mav.addObject("liste", liste);
+            mav.addObject("lesmois", lesmois);
+            return mav;
+        }
+
         @GetMapping("/recherche_produits")
         public ModelAndView rechercheProduits() throws Exception {
             ModelAndView mav = new ModelAndView("Produits/Recherche");
@@ -52,6 +72,14 @@ public class AdminController {
             Vector<Corps> listeCorps = Corps.getAll();
             mav.addObject("listeCorps", listeCorps);
             mav.addObject("listeAge", listeAge);
+            return mav;
+        }
+
+        @GetMapping("/liste_produitsConseiller")
+        public ModelAndView rechercheProduitsConseiller() throws Exception {
+            ModelAndView mav = new ModelAndView("Produits/RechercheConseiler");
+            Vector<LesMois> lesmois = LesMois.getAll();
+            mav.addObject("lesmois", lesmois);
             return mav;
         }
 
@@ -140,6 +168,81 @@ public class AdminController {
             mav.addObject("listeAge", listeAge);
             return mav;
         }
+
+        @PostMapping("/recherche_produitConseiller")
+        public ModelAndView submitProduitConseiller(@RequestParam Map<String, String> allParams) throws Exception {
+            // Récupérer les mois sélectionnés
+            List<Integer> selectedMois = allParams.entrySet().stream()
+                    .filter(entry -> entry.getKey().startsWith("mois_") && entry.getValue().equals("on"))
+                    .map(entry -> Integer.parseInt(entry.getKey().replace("mois_", "")))
+                    .toList();
+
+            // Récupérer l'année sélectionnée
+            String annee = allParams.get("annees");
+            ModelAndView mav = new ModelAndView("Produits/RechercheConseiler");
+            Vector<LesMois> lesmois = LesMois.getAll();
+            Vector<ProduitsConseil> liste = ProduitsConseil.getAll(selectedMois, annee);
+            mav.addObject("lesmois", lesmois);
+            mav.addObject("liste", liste);
+            return mav;
+        }
+
+        @PostMapping("/submit_produitConseiller")
+        public ModelAndView submitProduitInsertionConseiller(HttpServletRequest request) throws Exception {
+            ModelAndView mav = new ModelAndView("Produits/InsertionConseiler");
+            Connection conn = null;
+            try {
+                // Récupérer les paramètres
+                int produitId = Integer.parseInt(request.getParameter("produit"));
+                String annees = request.getParameter("annees");
+                List<Integer> moisIds = new ArrayList<>();
+                
+                // Parcourir les paramètres pour détecter les mois sélectionnés
+                Enumeration<String> paramNames = request.getParameterNames();
+                while (paramNames.hasMoreElements()) {
+                    String paramName = paramNames.nextElement();
+                    if (paramName.startsWith("mois_")) {
+                        int moisId = Integer.parseInt(paramName.substring(5)); // Extraire l'ID après "mois_"
+                        moisIds.add(moisId);
+                    }
+                }
+
+                // Vérifier les entrées
+                if (produitId == -1 || annees == null || moisIds.isEmpty()) {
+                    throw new Exception("Tous les champs doivent être remplis.");
+                }
+
+                // Insertion dans la base de données
+                conn = Seconnecter.connect();
+                String insertQuery = "INSERT INTO ConseilProduits (id_produits, id_mois, annees) VALUES (?, ?, ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+                    for (int moisId : moisIds) {
+                        pstmt.setInt(1, produitId);
+                        pstmt.setInt(2, moisId);
+                        pstmt.setInt(3, Integer.parseInt(annees));
+                        pstmt.addBatch();
+                    }
+                    pstmt.executeBatch(); // Exécuter toutes les insertions en une seule fois
+                }
+
+                // Message de succès
+                mav.addObject("status", "success");
+                mav.addObject("message", "Les recommandations ont été ajoutées avec succès.");
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", "Erreur lors de l'ajout des recommandations : " + e.getMessage());
+            } finally {
+                if (conn != null) {
+                    conn.close();
+                }
+            }
+            Vector<Produits> liste = Produits.getAll();
+            Vector<LesMois> lesmois = LesMois.getAll();
+            mav.addObject("liste", liste);
+            mav.addObject("lesmois", lesmois);
+            return mav;
+        }
+
 
     /*Fin produits */
 

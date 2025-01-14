@@ -4,6 +4,20 @@ INSERT INTO TypeAge (libele) VALUES
 ('Adulte'), 
 ('Sénior');
 
+INSERT INTO LesMois (libele) VALUES ('Janvier');
+INSERT INTO LesMois (libele) VALUES ('Février');
+INSERT INTO LesMois (libele) VALUES ('Mars');
+INSERT INTO LesMois (libele) VALUES ('Avril');
+INSERT INTO LesMois (libele) VALUES ('Mai');
+INSERT INTO LesMois (libele) VALUES ('Juin');
+INSERT INTO LesMois (libele) VALUES ('Juillet');
+INSERT INTO LesMois (libele) VALUES ('Août');
+INSERT INTO LesMois (libele) VALUES ('Septembre');
+INSERT INTO LesMois (libele) VALUES ('Octobre');
+INSERT INTO LesMois (libele) VALUES ('Novembre');
+INSERT INTO LesMois (libele) VALUES ('Décembre');
+
+
 INSERT INTO TypeProduits (libele) VALUES
 ('Pommade'),
 ('Crème'),
@@ -267,3 +281,25 @@ INSERT INTO Produits_TypeAge (id_produit, id_age) VALUES
 (8, 4), -- Anti-coagulants pour AVC chez les seniors
 (18, 4), -- Lunettes spéciales glaucome pour seniors
 (20, 4); -- Suppléments de fer pour anémie chez les seniors
+
+
+INSERT INTO ConseilProduits VALUES (1,1,2025);
+INSERT INTO ConseilProduits VALUES (2,3,2025);
+INSERT INTO ConseilProduits VALUES (10,4,2025);
+INSERT INTO ConseilProduits VALUES (11,5,2025);
+INSERT INTO ConseilProduits VALUES (7,9,2025);
+INSERT INTO ConseilProduits VALUES (8,7,2025);
+INSERT INTO ConseilProduits VALUES (9,6,2025);
+INSERT INTO ConseilProduits VALUES (12,5,2025);
+INSERT INTO ConseilProduits VALUES (11,12,2025);
+INSERT INTO ConseilProduits VALUES (11,11,2025);
+INSERT INTO ConseilProduits VALUES (20,10,2025);
+INSERT INTO ConseilProduits VALUES (17,10,2025);
+INSERT INTO ConseilProduits VALUES (5,12,2025);
+INSERT INTO ConseilProduits VALUES (6,11,2025);
+INSERT INTO ConseilProduits VALUES (2,8,2025);
+INSERT INTO ConseilProduits VALUES (1,7,2025);
+INSERT INTO ConseilProduits VALUES (8,4,2025);
+INSERT INTO ConseilProduits VALUES (9,3,2025);
+INSERT INTO ConseilProduits VALUES (7,3,2025);
+INSERT INTO ConseilProduits VALUES (4,7,2025);

@@ -11,6 +11,13 @@ CREATE TABLE Categorie(
    PRIMARY KEY(id)
 );
 
+CREATE TABLE LesMois(
+   id SERIAL,
+   libele VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id)
+);
+
+
 
 CREATE TABLE Corps(
    id SERIAL,
@@ -100,6 +107,17 @@ CREATE TABLE Produits_Type(
    FOREIGN KEY(id_produits) REFERENCES Produits(id),
    FOREIGN KEY(id_typeProduit) REFERENCES TypeProduits(id)
 );
+
+
+CREATE TABLE ConseilProduits(
+   id_produits INTEGER,
+   id_mois INTEGER,
+   annees INTEGER NOT NULL,
+   PRIMARY KEY(id_produits, id_mois),
+   FOREIGN KEY(id_produits) REFERENCES Produits(id),
+   FOREIGN KEY(id_mois) REFERENCES LesMois(id)
+);
+
 
 
 
