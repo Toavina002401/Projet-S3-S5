@@ -23,12 +23,12 @@
             .flex-container {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 05px; /* Espacement entre les éléments */
+                gap: 10px; /* Espacement entre les éléments */
             }
             
             .flex-container > div {
                 flex: 1 1 auto; /* Les éléments s'ajustent automatiquement */
-                min-width: 150px; /* Largeur minimale pour chaque élément */
+                min-width: 65px; /* Largeur minimale pour chaque élément */
             }
         </style>
     </head>

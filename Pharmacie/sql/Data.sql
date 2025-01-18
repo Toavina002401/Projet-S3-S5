@@ -18,6 +18,24 @@ INSERT INTO LesMois (libele) VALUES ('Novembre');
 INSERT INTO LesMois (libele) VALUES ('Décembre');
 
 
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Jean Dupont', '0612345678', '10 Rue des Lilas, Paris');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Marie Dubois', '0623456789', '25 Avenue Victor Hugo, Lyon');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Luc Martin', '0634567890', '50 Boulevard Haussmann, Marseille');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Élise Bernard', '0645678901', '8 Place de la République, Bordeaux');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Paul Morel', '0656789012', '30 Rue Lafayette, Lille');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Claire Petit', '0667890123', '15 Rue du Faubourg, Toulouse');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Julien Lefèvre', '0678901234', '40 Allée des Acacias, Nantes');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Laura Fournier', '0689012345', '12 Rue de Provence, Strasbourg');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Antoine Simon', '0690123456', '22 Rue de la Paix, Nice');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Camille Richard', '0610987654', '35 Avenue des Champs-Élysées, Rennes');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Hugo Garcia', '0621098765', '18 Rue des Arts, Grenoble');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Sophie Lambert', '0632109876', '28 Rue Jean Jaurès, Montpellier');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Thomas Dupuis', '0643210987', '45 Rue Nationale, Dijon');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Alice Laurent', '0654321098', '55 Rue de la Liberté, Clermont-Ferrand');
+INSERT INTO Client (nom, telephone, adresse) VALUES ('Nathan Perrin', '0665432109', '60 Rue de la Gare, Rouen');
+
+
+
 INSERT INTO TypeProduits (libele) VALUES
 ('Pommade'),
 ('Crème'),

@@ -21,11 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import source.connexion.Seconnecter;
+import source.model.Clients;
 import source.model.Corps;
 import source.model.Laboratoires;
 import source.model.LesMois;
 import source.model.Produits;
 import source.model.ProduitsConseil;
+import source.model.RechercheClients;
 import source.model.RechercheVente;
 import source.model.TypeAge;
 import source.model.TypeProduits;
@@ -169,23 +171,60 @@ public class AdminController {
             return mav;
         }
 
+        // @PostMapping("/recherche_produitConseiller")
+        // public ModelAndView submitProduitConseiller(@RequestParam Map<String, String> allParams) throws Exception {
+        //     // Récupérer les mois sélectionnés
+        //     List<Integer> selectedMois = allParams.entrySet().stream()
+        //             .filter(entry -> entry.getKey().startsWith("mois_") && entry.getValue().equals("on"))
+        //             .map(entry -> Integer.parseInt(entry.getKey().replace("mois_", "")))
+        //             .toList();
+
+        //     // Récupérer l'année sélectionnée
+        //     String annee = allParams.get("annees");
+        //     ModelAndView mav = new ModelAndView("Produits/RechercheConseiler");
+        //     Vector<LesMois> lesmois = LesMois.getAll();
+        //     Vector<ProduitsConseil> liste = ProduitsConseil.getAll(selectedMois, annee);
+        //     mav.addObject("lesmois", lesmois);
+        //     mav.addObject("liste", liste);
+        //     return mav;
+        // }
+
         @PostMapping("/recherche_produitConseiller")
         public ModelAndView submitProduitConseiller(@RequestParam Map<String, String> allParams) throws Exception {
-            // Récupérer les mois sélectionnés
-            List<Integer> selectedMois = allParams.entrySet().stream()
-                    .filter(entry -> entry.getKey().startsWith("mois_") && entry.getValue().equals("on"))
-                    .map(entry -> Integer.parseInt(entry.getKey().replace("mois_", "")))
-                    .toList();
+            // Initialiser une liste des mois sélectionnés
+            List<Integer> selectedMois = new ArrayList<>();
+
+            // Vérifier si "Tous" est sélectionné
+            boolean tousLesMois = allParams.containsKey("mois_-1") && allParams.get("mois_-1").equals("on");
+
+            if (!tousLesMois) {
+                // Ajouter uniquement les mois spécifiques
+                selectedMois = allParams.entrySet().stream()
+                        .filter(entry -> entry.getKey().startsWith("mois_") && entry.getValue().equals("on"))
+                        .map(entry -> Integer.parseInt(entry.getKey().replace("mois_", "")))
+                        .toList();
+            }
 
             // Récupérer l'année sélectionnée
             String annee = allParams.get("annees");
+
+            // Valider l'année (optionnel, selon vos besoins)
+            if (annee == null || annee.equals("-1")) {
+                throw new IllegalArgumentException("Veuillez sélectionner une année valide.");
+            }
+
+            // Charger les données nécessaires pour la vue
             ModelAndView mav = new ModelAndView("Produits/RechercheConseiler");
             Vector<LesMois> lesmois = LesMois.getAll();
             Vector<ProduitsConseil> liste = ProduitsConseil.getAll(selectedMois, annee);
+
+            // Ajouter les données au modèle
             mav.addObject("lesmois", lesmois);
             mav.addObject("liste", liste);
+
             return mav;
         }
+
 
         @PostMapping("/submit_produitConseiller")
         public ModelAndView submitProduitInsertionConseiller(HttpServletRequest request) throws Exception {
@@ -243,6 +282,8 @@ public class AdminController {
             return mav;
         }
 
+        
+
 
     /*Fin produits */
 
@@ -252,8 +293,10 @@ public class AdminController {
             ModelAndView mav = new ModelAndView("Ventes/Insertion");
             Vector<Produits> listeProduits = Produits.getAll();
             Vector<Laboratoires> listeLabo = Laboratoires.getAll();
+            Vector<Clients> listeClients = Clients.getAll();
             mav.addObject("listeLabo", listeLabo);
             mav.addObject("listeProduits", listeProduits);
+            mav.addObject("listeClients", listeClients);
             return mav;
         }
 
@@ -268,7 +311,7 @@ public class AdminController {
         }
 
         @PostMapping("/submit_vente")
-        public ModelAndView submitVente(@RequestParam("dateVente") String dateVente, @RequestParam("produit") int produit,  @RequestParam("quantite") int quantite,  @RequestParam("labo") int labo) throws Exception {
+        public ModelAndView submitVente(@RequestParam("dateVente") String dateVente, @RequestParam("produit") int produit,  @RequestParam("quantite") int quantite,  @RequestParam("labo") int labo,@RequestParam("client") int client) throws Exception {
             ModelAndView mav = new ModelAndView("Ventes/Insertion");
             LocalDateTime dateTime = LocalDateTime.parse(dateVente);
             String formattedDate = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -278,6 +321,7 @@ public class AdminController {
                 vente.setIdproduits(produit);
                 vente.setQuantite(quantite);
                 vente.setIdlabo(labo);
+                vente.setIdclient(client);
                 vente.save();
                 mav.addObject("status", "success");
             } catch (Exception e) {
@@ -286,8 +330,10 @@ public class AdminController {
             }
             Vector<Produits> listeProduits = Produits.getAll();
             Vector<Laboratoires> listeLabo = Laboratoires.getAll();
+            Vector<Clients> listeClients = Clients.getAll();
             mav.addObject("listeLabo", listeLabo);
             mav.addObject("listeProduits", listeProduits);
+            mav.addObject("listeClients", listeClients);
             return mav;
         }
 
@@ -310,6 +356,42 @@ public class AdminController {
 
     /*Fin ventes */
 
+    /*Clients */
+        @GetMapping("/recherche_clientsVente")
+        public ModelAndView rechercheClientsVente() throws Exception {
+            ModelAndView mav = new ModelAndView("clients/Recherche");
+            return mav;
+        }
+
+        @PostMapping("/submit_Clientvente")
+        public ModelAndView submitClientvente(@RequestParam("dateVente") String dateVente) throws Exception {
+            ModelAndView mav = new ModelAndView("clients/Recherche");
+            Vector<RechercheClients> valiny = new Vector<RechercheClients>();
+            try {
+                valiny = RechercheClients.rechercheClient(dateVente);
+                mav.addObject("liste", valiny);
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", e.getMessage());
+            }
+
+            return mav;
+        }
+
+        @PostMapping("/submit_Clientvente2")
+        public ModelAndView submitClientvente2(@RequestParam("dateVenteDeb") String dateVenteDeb,@RequestParam("dateVenteFin") String dateVenteFin) throws Exception {
+            ModelAndView mav = new ModelAndView("clients/Recherche");
+            Vector<RechercheClients> valiny = new Vector<RechercheClients>();
+            try {
+                valiny = RechercheClients.rechercheClient2(dateVenteDeb,dateVenteFin);
+                mav.addObject("liste", valiny);
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", e.getMessage());
+            }
+            return mav;
+        }
+    /*Fin Clients */
 
     /*Maladies */
         @GetMapping("/insertion_maladies")

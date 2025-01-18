@@ -91,6 +91,11 @@ CREATE TABLE Vente(
    FOREIGN KEY(id_laboratoire) REFERENCES Laboratoires(id),
    FOREIGN KEY(id_produits) REFERENCES Produits(id)
 );
+-- Ajouter la colonne id_client
+ALTER TABLE Vente ADD COLUMN id_client INTEGER;
+
+-- Ajouter la contrainte de clé étrangère pour id_client
+ALTER TABLE Vente ADD CONSTRAINT fk_vente_client FOREIGN KEY (id_client) REFERENCES Client(id);
 
 CREATE TABLE TypeProduits(
    id SERIAL,
@@ -117,6 +122,18 @@ CREATE TABLE ConseilProduits(
    FOREIGN KEY(id_produits) REFERENCES Produits(id),
    FOREIGN KEY(id_mois) REFERENCES LesMois(id)
 );
+
+CREATE TABLE Client(
+   id SERIAL,
+   nom VARCHAR(255)  NOT NULL,
+   telephone VARCHAR(255) ,
+   adresse VARCHAR(255) ,
+   PRIMARY KEY(id)
+);
+
+
+
+
 
 
 

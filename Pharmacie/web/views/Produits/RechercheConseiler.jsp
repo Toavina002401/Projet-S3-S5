@@ -21,12 +21,12 @@
             .flex-container {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 05px; /* Espacement entre les éléments */
+                gap: 10px; /* Espacement entre les éléments */
             }
             
             .flex-container > div {
                 flex: 1 1 auto; /* Les éléments s'ajustent automatiquement */
-                min-width: 150px; /* Largeur minimale pour chaque élément */
+                min-width: 65px; /* Largeur minimale pour chaque élément */
             }
         </style>
     </head>
@@ -47,6 +47,10 @@
                         <div class="mb-3">
                             <label for="produit" class="form-label">Pour les mois:</label>
                             <div class="flex-container">
+                                <div>
+                                    <input type="checkbox" name="mois_-1" id="mois_-1">
+                                    <label for="mois_-1" class="form-label">Tous</label>
+                                </div>
                                 <% for(int i=0;i<lesmois.size();i++){ %>
                                     <div>
                                         <input type="checkbox" name="mois_<%= lesmois.elementAt(i).getId() %>" id="mois_<%= lesmois.elementAt(i).getId() %>">
@@ -60,6 +64,7 @@
                             <label for="annees" class="form-label">pour l'années:</label>
                             <select name="annees" id="annees" class="form-control">
                                 <option value="-1" selected disabled>Listes des années dispo</option>
+                                <option value="-1">Tous</option>
                                 <option value="2025">2025</option>
                                 <option value="2024">2024</option>
                                 <option value="2023">2023</option>
@@ -80,7 +85,7 @@
         <div class="container">
             <div class="text-center mt-5">
                 <div class="table-container">
-                    <h1 class="mb-5">Liste des produits  conseiller du mois</h1>
+                    <h1 class="mb-5">Liste des produits  conseiller :</h1>
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>

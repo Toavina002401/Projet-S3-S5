@@ -6,6 +6,7 @@
     String message = (String)request.getAttribute("message");
     Vector<Produits> listeProduits = (Vector<Produits>)request.getAttribute("listeProduits");
     Vector<Laboratoires> listeLabo = (Vector<Laboratoires>)request.getAttribute("listeLabo");
+    Vector<Clients> listeClients = (Vector<Clients>)request.getAttribute("listeClients");
 %>
 <!DOCTYPE html>
 <html lang="en">    
@@ -52,6 +53,16 @@
                         <div class="mb-3">
                             <label for="quantite" class="form-label">Quantite</label>
                             <input type="number" class="form-control" id="quantite" name="quantite" placeholder="Entrez le quantite du produit" required>
+                        </div>
+                        <!-- Clients -->
+                        <div class="mb-3">
+                            <label for="client" class="form-label">Liste des clients:</label>
+                            <select name="client" id="client" class="form-control">
+                                <option value="-1" selected disabled>Clients Disponibles</option>
+                                <% for(int i=0;i<listeClients.size();i++){ %>
+                                    <option value="<%= listeClients.elementAt(i).getId() %>"><%= listeClients.elementAt(i).getNom() %></option>
+                                <% } %>
+                            </select>
                         </div>
                         <!-- Laboratoires -->
                         <div class="mb-3">

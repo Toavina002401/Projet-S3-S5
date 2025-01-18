@@ -39,6 +39,15 @@ String baseUrl = (String)request.getAttribute("baseUrl");
                     </ul>
                 </li>
                 <li class="nav-item dropdown me-3">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clients</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/insertion_clients">Insertion d'une Clients</a></li>
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/liste_clients">Liste des Clients</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/recherche_clientsVente">Recherche des Clients</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown me-3">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ventes</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="<%= baseUrl %>/insertion_ventes">Insertion d'une vente</a></li>

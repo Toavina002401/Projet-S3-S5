@@ -12,9 +12,9 @@ public class Vente {
     private int idproduits;
     private int idlabo;
     private int quantite;
+    private int idclient;
 
-    
-    
+
     public Vente(int id, String date_vente, int idproduits, int idlabo, int quantite) {
         this.id = id;
         this.date_vente = date_vente;
@@ -23,6 +23,14 @@ public class Vente {
         this.quantite = quantite;
     }
 
+    public int getIdclient() {
+        return idclient;
+    }
+
+
+    public void setIdclient(int idclient) {
+        this.idclient = idclient;
+    }
 
     public Vente() {
     }
@@ -74,11 +82,12 @@ public class Vente {
             conn = Seconnecter.connect();
             String dateTime = this.getDate_vente();
             java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(dateTime);
-            pstm = conn.prepareStatement("INSERT INTO Vente (date_vente, quantite, id_laboratoire, id_produits) VALUES (?,?,?,?)");
+            pstm = conn.prepareStatement("INSERT INTO Vente (date_vente, quantite, id_laboratoire, id_produits, id_client) VALUES (?,?,?,?,?)");
             pstm.setTimestamp(1, timestamp);
             pstm.setInt(2, this.getQuantite());
             pstm.setInt(3, this.getIdlabo());
             pstm.setInt(4, this.getIdproduits());
+            pstm.setInt(5, this.getIdclient());
             pstm.executeUpdate();
         } catch (SQLException e) {
             conn.rollback();
