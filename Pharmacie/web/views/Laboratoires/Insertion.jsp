@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,source.model.*" %>
 <%
   String baseUrl = (String)request.getAttribute("baseUrl");
   String status = (String)request.getAttribute("status");
   String message = (String)request.getAttribute("message");
+  Vector<Genre> listeGenre = (Vector<Genre>)request.getAttribute("listeGenre");
 %>
 <!DOCTYPE html>
 <html lang="en">    
@@ -39,6 +41,16 @@
                         <div class="mb-3">
                             <label for="nomProduit" class="form-label">Adresse</label>
                             <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Entrez l'adresse" required>
+                        </div>
+                        <!-- Genre -->
+                        <div class="mb-3">
+                            <label for="idGenre" class="form-label">Genre:</label>
+                            <select name="idGenre" id="idGenre" class="form-control">
+                                <option selected disabled></option>
+                                <% for(int i=0;i<listeGenre.size();i++){ %>
+                                    <option value="<%= listeGenre.elementAt(i).getId() %>"><%= listeGenre.elementAt(i).getSexe() %></option>
+                                <% } %>
+                            </select>
                         </div>
                         <!-- Bouton Submit -->
                         <div class="text-center">

@@ -13,6 +13,15 @@ public class Laboratoires {
     private int id;
     private String nom_laboratoire;
     private String adresse;
+    private int idGenre;
+
+    public int getIdGenre() {
+        return idGenre;
+    }
+
+    public void setIdGenre(int idGenre) {
+        this.idGenre = idGenre;
+    }
 
     public Laboratoires(int id, String nom_laboratoire, String adresse) {
         this.id = id;
@@ -88,6 +97,7 @@ public class Laboratoires {
                 labo.setId(rsl.getInt(1));
                 labo.setNom_laboratoire(rsl.getString(2));
                 labo.setAdresse(rsl.getString(3));
+                labo.setIdGenre(rsl.getInt(4));
                 valiny.add(labo);
             }
         } catch (SQLException e) {
@@ -107,9 +117,10 @@ public class Laboratoires {
         PreparedStatement pstm = null;
         try {
             conn = Seconnecter.connect();
-            pstm = conn.prepareStatement("INSERT INTO Laboratoires (nom_laboratoire, adresse) VALUES (?,?)");
+            pstm = conn.prepareStatement("INSERT INTO Laboratoires (nom_laboratoire, adresse,id_sexe) VALUES (?,?,?)");
             pstm.setString(1, this.getNom_laboratoire());
             pstm.setString(2, this.getAdresse());
+            pstm.setInt(3, this.getIdGenre());
             pstm.executeUpdate();
         } catch (SQLException e) {
             conn.rollback();
@@ -165,10 +176,11 @@ public class Laboratoires {
         PreparedStatement pstm = null;
         try {
             conn = Seconnecter.connect();
-            pstm = conn.prepareStatement("update Laboratoires set nom_laboratoire=? , adresse=? where id=?");
+            pstm = conn.prepareStatement("update Laboratoires set nom_laboratoire=? , adresse=? , id_sexe = ? where id=?");
             pstm.setString(1, labo.getNom_laboratoire());
             pstm.setString(2, labo.getAdresse());
-            pstm.setInt(3, labo.getId());
+            pstm.setInt(3, labo.getIdGenre());
+            pstm.setInt(4, labo.getId());
             pstm.executeUpdate();
         } catch (SQLException e) {
             conn.rollback();
@@ -186,10 +198,11 @@ public class Laboratoires {
         PreparedStatement pstm = null;
         try {
             conn = Seconnecter.connect();
-            pstm = conn.prepareStatement("update Laboratoires set nom_laboratoire=? , adresse=? where id=?");
+            pstm = conn.prepareStatement("update Laboratoires set nom_laboratoire=? , adresse=? , id_sexe = ? where id=?");
             pstm.setString(1, this.getNom_laboratoire());
             pstm.setString(2, this.getAdresse());
-            pstm.setInt(3, this.getId());
+            pstm.setInt(3, this.getIdGenre());
+            pstm.setInt(4, this.getId());
             pstm.executeUpdate();
         } catch (SQLException e) {
             conn.rollback();

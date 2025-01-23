@@ -33,6 +33,9 @@ CREATE TABLE Laboratoires(
    adresse VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id)
 );
+ALTER TABLE Laboratoires ADD COLUMN id_sexe INTEGER;
+-- Ajouter la contrainte de clé étrangère pour id_client
+ALTER TABLE Laboratoires ADD CONSTRAINT fk_labo_sexe FOREIGN KEY (id_sexe) REFERENCES Genre(id);
 
 
 CREATE TABLE Maladies(
@@ -135,6 +138,13 @@ CREATE TABLE Commission(
    id SERIAL,
    date_maj TIMESTAMP NOT NULL,
    pourcentage NUMERIC(4,2)   NOT NULL,
+   PRIMARY KEY(id)
+);
+
+
+CREATE TABLE Genre(
+   id SERIAL,
+   sexe VARCHAR(255)  NOT NULL,
    PRIMARY KEY(id)
 );
 

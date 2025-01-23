@@ -6,6 +6,9 @@ INSERT INTO TypeAge (libele) VALUES
 ('Adulte'), 
 ('Sénior');
 
+INSERT INTO Genre (sexe) VALUES ('Masculin');
+INSERT INTO Genre (sexe) VALUES ('Feminin');
+
 INSERT INTO LesMois (libele) VALUES ('Janvier');
 INSERT INTO LesMois (libele) VALUES ('Février');
 INSERT INTO LesMois (libele) VALUES ('Mars');

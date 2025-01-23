@@ -24,6 +24,7 @@ import source.connexion.Seconnecter;
 import source.model.Clients;
 import source.model.Commision;
 import source.model.Corps;
+import source.model.Genre;
 import source.model.Laboratoires;
 import source.model.LesMois;
 import source.model.Produits;
@@ -397,12 +398,20 @@ public class AdminController {
         @GetMapping("/insertion_laboratoires")
         public ModelAndView insertionLaboratoires() throws Exception {
             ModelAndView mav = new ModelAndView("Laboratoires/Insertion");
+            Vector<Genre> listeGenre = Genre.getAll();
+            mav.addObject("listeGenre", listeGenre);
             return mav;
         }
 
         @GetMapping("/liste_vendeurCommission")
         public ModelAndView rechercheCommision() throws Exception {
             ModelAndView mav = new ModelAndView("Laboratoires/Commission");
+            return mav;
+        }
+
+        @GetMapping("/etat_laboratoires")
+        public ModelAndView etatCommision() throws Exception {
+            ModelAndView mav = new ModelAndView("Laboratoires/EtatCommission");
             return mav;
         }
 
@@ -423,6 +432,26 @@ public class AdminController {
             return mav;
         }
 
+        @PostMapping("/submit_EtatVendeurs")
+        public ModelAndView submitEtatVendeurs(@RequestParam("dateVenteDeb") String dateVenteDeb,@RequestParam("dateVenteFin") String dateVenteFin,@RequestParam("limite") double limite) throws Exception {
+            ModelAndView mav = new ModelAndView("Laboratoires/EtatCommission");
+            Vector<Vendeurs> listeMasculin = new Vector<Vendeurs>();
+            Vector<Vendeurs> listeFeminin = new Vector<Vendeurs>();
+            Commision commi = new Commision();
+            commi.setId(1);
+            commi.setPourcentage(5);
+            try {
+                listeMasculin = Vendeurs.getEtatCommision(dateVenteDeb, dateVenteFin,commi.getPourcentage(), 1,limite);
+                listeFeminin = Vendeurs.getEtatCommision(dateVenteDeb, dateVenteFin,commi.getPourcentage(), 2,limite);
+                mav.addObject("listeMasculin", listeMasculin);
+                mav.addObject("listeFeminin", listeFeminin);
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", e.getMessage());
+            }
+            return mav;
+        }
+
         @GetMapping("/liste_laboratoires")
         public ModelAndView listeLaboratoires() throws Exception {
             ModelAndView mav = new ModelAndView("Laboratoires/Liste");
@@ -432,12 +461,13 @@ public class AdminController {
         }
 
         @PostMapping("/submit_laboratoire")
-        public ModelAndView submitLaboratoire(@RequestParam("nomLaboratoire") String nomLaboratoire, @RequestParam("adresse") String adresse) throws Exception {
+        public ModelAndView submitLaboratoire(@RequestParam("nomLaboratoire") String nomLaboratoire, @RequestParam("adresse") String adresse,@RequestParam("idGenre") int idGenre) throws Exception {
             ModelAndView mav = new ModelAndView("Laboratoires/Insertion");
             try {
                 Laboratoires labo = new Laboratoires();
                 labo.setNom_laboratoire(nomLaboratoire);
                 labo.setAdresse(adresse);
+                labo.setIdGenre(idGenre);
                 labo.save();
                 mav.addObject("status", "success");
                 mav.addObject("laboratoire", labo);
@@ -445,6 +475,8 @@ public class AdminController {
                 mav.addObject("status", "error");
                 mav.addObject("message", "misy "+e.getMessage());
             }
+            Vector<Genre> listeGenre = Genre.getAll();
+            mav.addObject("listeGenre", listeGenre);
             return mav;
         }
 
