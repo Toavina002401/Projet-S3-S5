@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletRequest;
 import source.connexion.Seconnecter;
 import source.model.Clients;
+import source.model.Commision;
 import source.model.Corps;
 import source.model.Laboratoires;
 import source.model.LesMois;
@@ -31,6 +32,7 @@ import source.model.RechercheClients;
 import source.model.RechercheVente;
 import source.model.TypeAge;
 import source.model.TypeProduits;
+import source.model.Vendeurs;
 import source.model.Vente;
 
 
@@ -170,24 +172,6 @@ public class AdminController {
             mav.addObject("listeAge", listeAge);
             return mav;
         }
-
-        // @PostMapping("/recherche_produitConseiller")
-        // public ModelAndView submitProduitConseiller(@RequestParam Map<String, String> allParams) throws Exception {
-        //     // Récupérer les mois sélectionnés
-        //     List<Integer> selectedMois = allParams.entrySet().stream()
-        //             .filter(entry -> entry.getKey().startsWith("mois_") && entry.getValue().equals("on"))
-        //             .map(entry -> Integer.parseInt(entry.getKey().replace("mois_", "")))
-        //             .toList();
-
-        //     // Récupérer l'année sélectionnée
-        //     String annee = allParams.get("annees");
-        //     ModelAndView mav = new ModelAndView("Produits/RechercheConseiler");
-        //     Vector<LesMois> lesmois = LesMois.getAll();
-        //     Vector<ProduitsConseil> liste = ProduitsConseil.getAll(selectedMois, annee);
-        //     mav.addObject("lesmois", lesmois);
-        //     mav.addObject("liste", liste);
-        //     return mav;
-        // }
 
         @PostMapping("/recherche_produitConseiller")
         public ModelAndView submitProduitConseiller(@RequestParam Map<String, String> allParams) throws Exception {
@@ -413,6 +397,29 @@ public class AdminController {
         @GetMapping("/insertion_laboratoires")
         public ModelAndView insertionLaboratoires() throws Exception {
             ModelAndView mav = new ModelAndView("Laboratoires/Insertion");
+            return mav;
+        }
+
+        @GetMapping("/liste_vendeurCommission")
+        public ModelAndView rechercheCommision() throws Exception {
+            ModelAndView mav = new ModelAndView("Laboratoires/Commission");
+            return mav;
+        }
+
+        @PostMapping("/submit_VendeursCommission")
+        public ModelAndView submitVendeurCommision(@RequestParam("dateVenteDeb") String dateVenteDeb,@RequestParam("dateVenteFin") String dateVenteFin) throws Exception {
+            ModelAndView mav = new ModelAndView("Laboratoires/Commission");
+            Vector<Vendeurs> valiny = new Vector<Vendeurs>();
+            Commision commi = new Commision();
+            commi.setId(1);
+            commi.setPourcentage(5);
+            try {
+                valiny = Vendeurs.getCommissionsVendeurs(dateVenteDeb,dateVenteFin,commi.getPourcentage());
+                mav.addObject("liste", valiny);
+            } catch (Exception e) {
+                mav.addObject("status", "error");
+                mav.addObject("message", e.getMessage());
+            }
             return mav;
         }
 

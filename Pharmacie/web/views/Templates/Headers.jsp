@@ -35,7 +35,7 @@ String baseUrl = (String)request.getAttribute("baseUrl");
                         <li><a class="dropdown-item" href="<%= baseUrl %>/insertion_laboratoires">Insertion d'une laboratoire</a></li>
                         <li><a class="dropdown-item" href="<%= baseUrl %>/liste_laboratoires">Liste des laboratoires</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Recherche d'une laboratoire</a></li>
+                        <li><a class="dropdown-item" href="<%= baseUrl %>/liste_vendeurCommission">Commissions des laboratoire</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown me-3">

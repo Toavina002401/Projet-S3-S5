@@ -131,6 +131,14 @@ CREATE TABLE Client(
    PRIMARY KEY(id)
 );
 
+CREATE TABLE Commission(
+   id SERIAL,
+   date_maj TIMESTAMP NOT NULL,
+   pourcentage NUMERIC(4,2)   NOT NULL,
+   PRIMARY KEY(id)
+);
+
+
 
 
 

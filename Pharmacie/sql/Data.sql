@@ -1,3 +1,5 @@
+INSERT INTO Commission(date_maj,pourcentage)  VALUES ('2025-01-01 12:00:00',5);
+
 INSERT INTO TypeAge (libele) VALUES
 ('Enfant'), 
 ('Adolescent'), 
